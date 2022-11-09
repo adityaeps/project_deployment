@@ -1,0 +1,11 @@
+sklearn
+pandas
+numpy
+Flask-Cors
+joblib
+Flask
+joblib
+numpy
+scikit_learn
+gunicorn
+xgboost
