@@ -9,3 +9,4 @@ numpy
 scikit_learn
 gunicorn
 xgboost
+imblearn
