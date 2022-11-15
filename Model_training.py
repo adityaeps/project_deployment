@@ -15,6 +15,7 @@ from feature_engineering.Feature_engineering import Encoding
 from data_ingestion.loading import LoadingRaw
 from sklearn.model_selection import train_test_split
 from best_model_finder.best_model_finder import BestModel
+from imblearn.over_sampling import SMOTE
 
 
 class TrainModel:
@@ -53,6 +54,9 @@ class TrainModel:
             train_y = feature_engineering.target_encoding(train_y)
             label_transformer = pickle.load(open('models/label_model', 'rb'))
             test_y = pd.DataFrame(label_transformer.transform(test_y), columns=['Target'])
+            # Oversampling the imbalanced data
+            oversample = SMOTE()
+            train_x, train_y = oversample.fit_resample(train_x, train_y)
             # Scaling features columns
             train_x = feature_engineering.scaling(train_x)
             test_x = feature_engineering.scaling(test_x)
@@ -69,7 +73,7 @@ class TrainModel:
             # On test data
             test_score_accuracy, test_score_balance_accuracy, test_score_roc_auc, test_report = best_model.scores(
                 test_x, test_y, model_object)
-            f = open('logs/model_scores.txt', 'a+')
+            f = open('logs/model_scores.txt', 'w+')
             lines = [str(score_accuracy) + str(score_roc_auc) + str(score_balance_accuracy) + str(report)
                      + str(test_score_accuracy) + str(test_score_balance_accuracy) + str(test_score_roc_auc)
                      + str(test_report)]
