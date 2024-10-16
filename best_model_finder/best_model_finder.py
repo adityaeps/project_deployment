@@ -10,7 +10,7 @@ from sklearn.model_selection import StratifiedKFold
 
 class BestModel:
 
-    def __int__(self):
+    def __init__(self):
         self.log_writer = Logger()
         self.file_object = open('logs/model_finding_logs.txt', 'a+')
 
